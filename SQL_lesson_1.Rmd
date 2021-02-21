@@ -1,0 +1,111 @@
+---
+title: "SQL Lesson 1"
+author: "Chi Gao"
+date: "2/23/2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+## Introduction | Our Scenario Today
+
+We are running a bookstore collectively (just like the left-wing leaning bookstore on campus
+**The Groundwork Books!**). How do you manage your book inventory? 
+
+- What are some **common operations** that you want to do to your inventory? (CRUD)
+- What are some **tool(s)** that you can think of to support your operation on the inventory?
+- With these tool(s), what are some **problems** that might emerge in the foreseeable future?
+
+Using database and database management system, many of these concerns will be addressed.
+
+Note: These problems and solutions are generalizable.
+
+<div class = "notes">
+* CRUD - Create, Read, Update, and Delete
+* Tools - Google sheet, excel, Notion
+* Limitations: 
+  * Update - Manual work, error prone. (The inventory is still a mess)
+  * Read - not efficient (customer ask if we have a book)
+  * Delete - on no
+</div>
+
+## Introduction | Database related concepts 
+
+- **Database**: Shared collection of related data used to support the activities of
+a particular organization.
+- **Database Management System(DBMS)**: Programs that support CRUD operations and control
+all access to databases.
+  - Provide an environment that is both **convenient** and **efficient** for
+  users to retrieve and store information
+- **SQL**: Structured Query Language - language used to talk to DBMS
+
+<center>
+![db_dbms_sql diagram](diagram/db_dbms_sql.png){height=30% width=50%}
+</center>
+
+## Introduction | Formalized Motivation
+
+- **Automation**. Interface linking to other programs
+- **Summary Statistics**. Help you generate the report 
+- **Enforcement of Integrity constraints**. Rules to constraints that users
+enter valid information (**data type!**)
+- **Multiuser system**. Control for access, data sharing 
+  - e.g. Read and write, read-only
+- **Backup and recovery facilities**. 
+
+
+## Data model | A bird-eye view of our data
+
+```{r include=F}
+books <- read_csv("data/books.csv")
+books <- books %>% mutate(ISBN13 = as.character(ISBN13))
+customers <- read_csv("data/customers.csv")
+transactions <- read_csv("data/transactions.csv")
+```
+```{r echo=T}
+books
+```
+---
+
+```{r echo=T}
+customers
+```
+---
+```{r echo=T}
+transactions
+```
+
+## Data Model | Key Concepts
+
+- 
+
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+<div class="notes">
+
+This is my *note*
+
+- it can contain markdown
+- like this
+</div>
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+

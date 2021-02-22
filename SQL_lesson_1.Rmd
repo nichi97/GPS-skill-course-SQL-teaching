@@ -9,6 +9,7 @@ output: ioslides_presentation
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 ```
+# Introduction
 
 ## Introduction | Our Scenario Today
 
@@ -56,7 +57,7 @@ enter valid information (**data type!**)
   - e.g. Read and write, read-only
 - **Backup and recovery facilities**. 
 
-
+# Data Model
 ## Data model | A bird-eye view of our data
 
 ```{r include=F}
@@ -65,6 +66,7 @@ books <- books %>% mutate(ISBN13 = as.character(ISBN13))
 customers <- read_csv("data/customers.csv")
 transactions <- read_csv("data/transactions.csv")
 ```
+
 ```{r echo=T}
 books
 ```
@@ -78,34 +80,303 @@ customers
 transactions
 ```
 
-## Data Model | Key Concepts
+## Data Model | Entity-Relationship Diagram
+<center>
+![](diagram/SQL_ERD.png){width=80%}
+</center>
 
-- 
+## Data Model | Anatomy of a Database
+
+- **Primary Key**: The column that uniquely identify each row in a table
+- **Foreign Key**: A column in a table that references the primary key in another table
+
+<center>
+![](diagram/SQL_ERD_annotated.png){width=80%}
+</center>
+
+**Question**: There is a missing relation. Can you spot it?
+
+# SQL
+
+## SQL | Introduction
+- SQL stands for **S**tructured **Q**uery **L**anguage 
+- Use SQL to talk to a DBMS
+- Pronounced "SQL" or "Sequel"
+- It is the amalgamation of 
+  - a data query Language (R) <div class="blue"> Our Focus </div>
+  - a data definition language (C)
+  - a data control language (Access)
+  - a data manipulation language (UD)
+  
+## SQL | Introduction
+- SQL is formally defined, but implemented differently 
+  - **Incompatibility**, but very similar. You only need to learn it once.
+  - Popular Extensions: MySQL, PostgreSQL, 
+  - We will be using **SQLite**
+  
+ - Run from 
+  1. command line prompt
+  1. Dedicated Program like DB Browser
+  1. Other programming languages such as Python and R, with dedicated libraries 
+  
+## SQL | Language & Syntax
+- **Case Insensitive!**
+  - UPPERCASE FOR KEYWORDS
+  - lowercase for anything else
+- End your statement with ';'
+  - empowers nice formatting
+
+## A Tour of DB Browser | Open Existing Database
+
+<center>
+![](screenshot/import_sql.png){width=100%}
+</center>
+
+## A Tour of DB Browser | Database Structure
+<center>
+![](screenshot/database_structure.png){width=100%}
+</center>
+
+## A Tour of DB Browser | Browse Data
+<center>
+![](screenshot/browse_data.png){width=100% height=80%}
+</center>
+## A Tour of DB Browser | Execute SQL
+<center>
+![](screenshot/execute_sql.png){width=100%}
+</center>
 
 
-## Slide with Bullets
+## Non-relational Operations | Overview
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+- If you have taken the R module, you know them all already
 
-<div class="notes">
+![](meme/technical_dividend.jpg){width=80% height=80%}
+---
 
-This is my *note*
 
-- it can contain markdown
-- like this
-</div>
+## Non-relational Operations | Overview
 
-## Slide with R Output
+- Select columns: SELECT column(s) FROM table
+- Select unique rows: SELECT distinct rows from your table
+- Sort by a column: ORDER BY a column
+- Filter rows by a condition: WHERE [criteria]
+- Calculate new values on the fly
+- Calculate summary statistics with functions
+- Aggregate over groups: GROUP BY
 
-```{r cars, echo = TRUE}
-summary(cars)
+## SELECT
+
+```{sql eval=F,echo=T}
+-- syntax
+SELECT [column(s)] FROM table;
 ```
 
-## Slide with Plot
-
-```{r pressure}
-plot(pressure)
+Select 'title' and 'author' column from table 'books'
+```{sql eval=F,echo=T}
+SELECT title, author FROM books;
 ```
+
+In R:
+```{r eval=F, echo=T}
+books %>% select(title, author)
+```
+
+## SELECT | SELECT *
+
+- Select all columns in a table
+- Note '*' is called wild card
+```{sql eval=F, echo=T}
+-- syntax
+SELECT * FROM [table]
+```
+
+Select all columns in table books
+```{sql eval=F, echo=T}
+SELECT * FROM books;
+
+```
+
+```{r eval=F, echo=T}
+books %>% select_all()
+```
+
+## SELECT | SELECT DISTINCT
+
+Select distinct rows from selected column(s) in a table
+```{sql eval=F, echo=T}
+SELECT DISTINCT [column(s)] FROM [table];
+```
+
+**Question**: How many books are sold (not how many total copies of books)?
+```{sql eval=F, echo=T}
+SELECT DISTINCT ISBN FROM transactions;
+```
+
+In R:
+```{r eval=F, echo=T}
+transactions %>% select(ISBN) %>% unique()
+```
+
+## SELECT | ORDER BY
+
+- Select out columns from table, ordered by column(s), in ascending order (or descending order)
+```{sql eval=F, echo=T}
+SELECT [column(s)] FROM [table] ORDER BY [column(s)] [DESC];
+```
+
+**Question**: Explain this statement in plain English
+```{sql eval=F, echo=T}
+SELECT title, author FROM books ORDER BY author DESC;
+```
+
+```{r eval=F, echo=T}
+books %>% select(title, author) %>% arrange(author) # ascending order
+books %>% select(title, author) %>% arrange(desc(author)) # descending order
+```
+
+## Question
+
+Using SELECT and ORDER BY, find out who purchased the most books. 
+
+Hint: Sort the customers table by what column? In which order? 
+
+
+
+## Boolean Algebra
+
+* Two values: TRUE, FALSE
+* Operators: AND(&), OR(|), NOT(!)
+
+### AND
+
+| AND | TRUE | FALSE |
+|-----|------| ----- |
+|TRUE | TRUE | FALSE |
+|FALSE| FALSE| FALSE |
+
+---
+
+### OR 
+
+| OR  | TRUE | FALSE |
+|-----|------| ----- |
+|TRUE | TRUE | TRUE  |
+|FALSE| TRUE | FALSE |
+
+### NOT
+
+| NOT | TRUE | FALSE |
+| ----| ---- | ----- |
+|     | FALSE| TRUE  |
+
+## Boolean Algebra | Practice
+
+* (1 < -1) OR  (0 == 0)
+* (1 < -1) AND (-1 < 2)
+
+## WHERE 
+
+- Use WHERE clause to keep rows according to a certain criteria
+```{sql eval=F, echo=T}
+-- syntax
+SELECT [column(s)] FROM [table]
+WHERE [criteria return True];
+```
+
+Who purchased more than 1 books?
+```{sql eval=F, echo=T}
+-- notice how purchase_number is NOT in the outcome
+SELECT first, last FROM customers
+WHERE purchase_number >= 2;
+```
+
+In R:
+```{r eval=F, echo=T}
+customers %>% filter(purchase_number >= 2) %>% select(first, last)
+```
+
+## WHERE | compound criteria, LIKE, IN
+
+Whose First name started with letter A or L?
+```{sql eval=F, echo=T}
+SELECT first, last FROM customers
+WHERE (first LIKE 'A%') OR (last LIKE 'L%');
+```
+
+What books did customers whose id is 11111 and 11112 purchase?
+```{sql eval=F, echo=T}
+SELECT * FROM transactions 
+WHERE customer_id IN (11111,11112);
+```
+
+**Question (manual join)**: I also want to know who these customers and what books are. Using WHERE, how can I find out about these information?
+
+---
+
+**Question**: I want to check who purchased between 1 and 3 books. What is wrong with the following code?
+```{sql eval=F, echo=T}
+SELECT first, last, purchase_number FROM customers
+WHERE (purchase_number > 1) OR (purchase_number < 3);
+```
+
+--- 
+Or in R:
+```{r eval=F, echo=T}
+customers %>% filter(purchase_number > 1 & purchase_number < 3)
+```
+
+## Calculation on the fly | '||', Renaming using AS 
+
+Column-wise operations:
+```{sql eval=F, echo=T}
+SELECT first || ' ' || last AS full_name
+FROM customers;
+```
+
+## Aggregate Function
+
+```{sql eval=F, echo=T}
+-- syntax
+SELECT [function(column(s))] FROM [table]
+```
+
+What is the average rating of the books?
+```{sql eval=F, echo=T}
+SELECT avg(avg_rating) FROM books;
+```
+
+- List of aggregate functions
+  - avg(X)
+  - count(X)
+  - min(X)
+  - max(X)
+  - sum(X)
+  
+## Aggregate Function | Practice
+
+**Question**: What is the total number of purchases in *transactions* table?
+What is the total number of purchases in *customers* table? Do they match? This
+illustrate the principle of **single source of truth**
+
+## Group By
+
+```{sql eval=F, echo=T}
+-- syntax
+SELECT [function(column(s))] FROM table 
+GROUP BY [column(s)];
+```
+
+Example: What is the number of purchases by each person in transaction table?
+```{sql eval=F, echo=T}
+SELECT customer_id, count(*) FROM transactions
+GROUP BY customer_id;
+```
+
+In R:
+```{r eval=F, echo=T}
+transactions %>% group_by(customer_id) %>% summarize(n = n())
+```
+whose record did we miss?
+
 

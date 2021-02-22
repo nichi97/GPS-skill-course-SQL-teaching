@@ -1,14 +1,14 @@
-book_id,title,author,ISBN13,avg_rating,publisher
-529326,Beyond Good and Evil,Friedrich Nietzsche,9780679724650,3.99,Vintage
-169439,Sanshiro,Natsume Soseki,9781929280100,3.83,Center for Japanese Studies/University of Michigan
-629429,The World of Yesterday,Stefan Zweig,9780803252240,4.49,University of Nebraska Press
-418306,Chronicle of the Narvaez Expedition,Alvar Nunez Cabeza de Vaca,9780142437070,3.66,Penguin Classics
-19351,The Epic of Gilgamesh,Anonymous,9780141026282,3.7,Penguin Books Limited
-17329076,Letter from an Unknown Woman and Other Stories,Stefan Zweig,9781906548933,4.23,Pushkin Press
-1354,Gorgias,Plato,9780140449044,3.96,Penguin Classics
-1625,Twelfth Night,William Shakespeare,9780743482776,3.98,Simon Schuster
-91953,Leviathan,Thomas Hobbes,9780140431957,3.71,Penguin Books
-30741,The Essays: A Selection,Michel de Montaigne,9780140446029,4.07,Penguin Classics
-393134,The Prince,Niccolo Machiavelli,9780140449150,3.82,Penguin Group
-448836,Second Treatise of Government,John Locke,9780915144860,3.77,"Hackett Publishing Company (Indianapolis, IN)"
-19386,Candide and Related Texts,Voltaire,9780872205468,3.81,"Hackett Publishing Company, Inc."
+title,author,ISBN13,avg_rating,publisher
+Beyond Good and Evil,Friedrich Nietzsche,9.780679724650E+12,3.99,Vintage
+Sanshiro,Natsume Soseki,9.781929280100E+12,3.83,Center for Japanese Studies/University of Michigan
+The World of Yesterday,Stefan Zweig,9.780803252240E+12,4.49,University of Nebraska Press
+Chronicle of the Narvaez Expedition,Alvar Nunez Cabeza de Vaca,9.780142437070E+12,3.66,Penguin Classics
+The Epic of Gilgamesh,Anonymous,9.780141026282E+12,3.7,Penguin Books Limited
+Letter from an Unknown Woman and Other Stories,Stefan Zweig,9.781906548933E+12,4.23,Pushkin Press
+Gorgias,Plato,9.780140449044E+12,3.96,Penguin Classics
+Twelfth Night,William Shakespeare,9.780743482776E+12,3.98,Simon Schuster
+Leviathan,Thomas Hobbes,9.780140431957E+12,3.71,Penguin Books
+The Essays: A Selection,Michel de Montaigne,9.780140446029E+12,4.07,Penguin Classics
+The Prince,Niccolo Machiavelli,9.780140449150E+12,3.82,Penguin Group
+Second Treatise of Government,John Locke,9.780915144860E+12,3.77,"Hackett Publishing Company (Indianapolis, IN)"
+Candide and Related Texts,Voltaire,9.780872205468E+12,3.81,"Hackett Publishing Company, Inc."

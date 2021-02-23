@@ -11,10 +11,22 @@ library(tidyverse)
 ```
 # Introduction
 
+## Introduction | Roadmap
+
+- Introducing Scenario
+- Database Concepts & Motivation
+- Data Model 
+- SQL 
+  - Language 
+  
+  - SELECT
+  - WHERE
+  - GROUP BY 
+
 ## Introduction | Our Scenario Today
 
 We are running a bookstore collectively (just like the left-wing leaning bookstore on campus
-**The Groundwork Books!**). How do you manage your book inventory? 
+**The Groundwork Books Collective**). How do you manage your book inventory? 
 
 - What are some **common operations** that you want to do to your inventory? (CRUD)
 - What are some **tool(s)** that you can think of to support your operation on the inventory?

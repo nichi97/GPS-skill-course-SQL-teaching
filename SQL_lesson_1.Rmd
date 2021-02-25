@@ -253,7 +253,34 @@ Using SELECT and ORDER BY, find out who purchased the most books.
 
 Hint: Sort the customers table by what column? In which order? 
 
+## Review | Concepts
 
+- What is the distinction between Database, Database Management System, and SQL?
+How do they relate to each other?
+- What is a foreign key? What is a primary key? Why are they important to a
+relational database?
+- What are two language features of SQL (Case sensitive? End statements with?)
+
+## Review | SQL
+```{SQL echo=T, eval=F}
+SELECT [column(s)] FROM [table];
+SELECT * FROM [table];
+SELECT DISTINCT [column(s)] FROM [table];
+SELECT [column(s)] FROM [table] ORDER BY [column(s)] [DESC];
+```
+
+- Write a query to select the first and last name from `Customers` table
+- Write a query to select the entirety of the `Customers` table 
+- Write a query to find out how many **distinct** customers have purchased books
+from the `Transactions` table
+- Write a query to sort the `Books` table using the `title` column, in descending order.
+
+## Today
+
+- WHERE
+- Calculation on the fly
+- Aggregate Function
+- Group By
 
 ## Boolean Algebra
 
@@ -367,11 +394,13 @@ SELECT avg(avg_rating) FROM books;
   
 ## Aggregate Function | Practice
 
-**Question**: What is the total number of purchases in *transactions* table?
-What is the total number of purchases in *customers* table? Do they match? This
+**Question**: What is the total number of purchases in *Transactions* table?
+What is the total number of purchases in *Customers* table? Do they match? This
 illustrate the principle of **single source of truth**
 
 ## Group By
+
+- Usually used with aggregate functions
 
 ```{sql eval=F, echo=T}
 -- syntax
@@ -386,9 +415,54 @@ GROUP BY customer_id;
 ```
 
 In R:
-```{r eval=F, echo=T}
+```{sql eval=F, echo=T}
 transactions %>% group_by(customer_id) %>% summarize(n = n())
 ```
 whose record did we miss?
+
+## Join
+
+Combine data from multiple tables
+
+```{sql eval=F, echo=T}
+SELECT [table1.column(s), table2.column(s)] FROM [table1 JOIN table2]
+ON [table1.columnX == table2.columnY, ...];
+```
+
+How do we get information about each customers' `fav_book`? Not just the ISBN,
+but the title, author...
+
+Can we do:
+```{sql eval=F, echo=T}
+SELECT Customers.last || " " || Customers.first, Customers.fav_book, Books.ISBN13, Books.title, Books.author
+FROM Customers JOIN Books;
+```
+What did that statement do?
+
+## Join
+To tell SQL the specific columns we are joining, use `ON`: 
+
+```{sql eval=F, echo=T}
+SELECT Customers.first|| " " || Customers.last, Customers.fav_book, Books.ISBN13, Books.title, Books.author
+FROM Customers JOIN Books
+ON Customers.fav_book == Books.ISBN13;
+```
+
+**Question**: 
+1. Use `Where`, filter out all the transactions made to customers whose IDs are `11111` and `11112`
+2. Use `JOIN`, find out who they are, and 
+3. Use `JOIN`, find out what books they purchased.
+ 
+## RSQLite | SQLite in R
+
+## Where to go from here?
+
+[Software Carpentry](http://swcarpentry.github.io/sql-novice-survey/)
+
+Big data - Google [BigQuery](https://cloud.google.com/bigquery/)!
+
+
+
+
 
 

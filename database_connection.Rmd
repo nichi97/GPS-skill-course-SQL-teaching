@@ -1,0 +1,38 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(RSQLite)
+library(tidyverse)
+```
+
+```{r}
+connection <- dbConnect(SQLite(), "book_store.db")
+```
+
+```{r}
+results <- dbGetQuery(connection, "SELECT * FROM Books;")
+results
+class(results)
+```
+```{r}
+# Write fancy function to integrate with your database!
+
+getName <- function(personID){
+  query <- paste("SELECT first || ' ' || last AS full_name", 
+                 "FROM Customers", 
+                 "WHERE id == ", 
+                 personID, 
+                 ";")
+  return(dbGetQuery(connection, query) %>% pull(full_name))
+}
+
+print(getName(11112))
+```
+
+```{r}
+dbDisconnect(connection)
+```
+
